@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>virt-agent API v1</title>
+    <link rel="icon" href="../resources/favicon.ico" type="image/x-icon">
+</head>
+<body>
+    <h1>API Version 1</h1>
+
+    <h2>Read Operations</h2>
+    <ul>
+        <li>GET <a href="/api/v1/host">/api/v1/host</a></li>
+        <li>GET <a href="/api/v1/host/cpu">/api/v1/host/cpu</a></li>
+        <li>GET <a href="/api/v1/host/disk">/api/v1/host/disk</a></li>
+        <li>GET <a href="/api/v1/host/memory">/api/v1/host/memory</a></li>
+        <li>GET <a href="/api/v1/host/maxvcpu">/api/v1/host/maxvcpu</a></li>
+        <li>GET <a href="/api/v1/guests">/api/v1/guests</a></li>
+        <li>GET <a href="/api/v1/guests/{name}">/api/v1/guests/{name}</a></li>
+        <li>GET <a href="/api/v1/guests/{name}/cpu">/api/v1/guests/{name}/cpu</a></li>
+        <li>GET <a href="/api/v1/guests/{name}/disk">/api/v1/guests/{name}/disk</a></li>
+        <li>GET <a href="/api/v1/guests/{name}/memory">/api/v1/guests/{name}/memory</a></li>
+    </ul>
+
+    <h2>Write Operations</h2>
+    <ul>
+        <li>POST <a href="/api/v1/guests">/api/v1/guests</a></li>
+        <li>PATCH<a href="/api/v1/guests/{name}">/api/v1/guests/{name}</a></li>
+        <li>DELETE<a href="/api/v1/guests/{name}">/api/v1/guests/{name}</a></li>
+    </ul>
+</body>
+</html>
