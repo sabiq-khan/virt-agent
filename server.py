@@ -41,7 +41,7 @@ class APIServer(BaseHTTPRequestHandler):
         self.wfile.write(response_data.encode())
 
     def describe_host_cpu(self):
-        response_data = json.dumps({"freeCPU": host.describe_cpu_cores()}, indent=4)
+        response_data = json.dumps(host.describe_cpu_cores(), indent=4)
         self._set_headers()
         self.wfile.write(response_data.encode())
 
@@ -51,7 +51,7 @@ class APIServer(BaseHTTPRequestHandler):
         self.wfile.write(response_data.encode())
 
     def describe_host_memory(self):
-        response_data = json.dumps({"freeMemory": host.describe_memory_usage()}, indent=4)
+        response_data = json.dumps(host.describe_memory_usage(), indent=4)
         self._set_headers()
         self.wfile.write(response_data.encode())
 
