@@ -119,28 +119,35 @@ class APIServer(BaseHTTPRequestHandler):
             self.wfile.write(bytes("Resource not found.", "utf-8"))
 
     # TODO: Implement `POST`, `DELETE`, and `UPDATE`/`PATCH` methods
-    def do_POST(self):
-        if self.path == "/api/v1/guests/":
-            content_length = int(self.headers['Content-Length'])
-            post_body = self.rfile.read(content_length).decode('utf-8')
+    
+    def create_guest(self):
+        content_length = int(self.headers['Content-Length'])
+        post_body = self.rfile.read(content_length).decode('utf-8')
 
-            try:
-                params = json.loads(post_body)
-                guests.create_guest(name=params["name"], cpu=params["cpu"], memory=params["memory"], disk_size=params["diskSize"], network=params["network"], os_version=params["osVersion"], disk_image=params["diskImage"], host_name=params["hostName"], pdomain_name=params["domainName"], full_name=params["fullName"], username=params["username"])
-                self.send_response(200)
-                self.send_header("Content-type", "text/html")
-                self.end_headers()
-                self.wfile.write(bytes(f"Creation of VM {params['name']} in progress...", "utf-8"))
-            except json.JSONDecodeError:
-                self._set_headers(400, 'text/plain')
-                self.wfile.write("Invalid JSON".encode())
-                return
-            
+        try:
+            params = json.loads(post_body)
+            guest_info = guests.create_guest(name=params["name"], cpu=params["cpu"], memory=params["memory"], disk_size=params["diskSize"], network=params["network"], os_version=params["osVersion"], disk_image=params["diskImage"], host_name=params["hostName"], domain_name=params["domainName"], full_name=params["fullName"], username=params["username"])
+            self._set_headers()
+            self.wfile.write(bytes(f"{guest_info}", "utf-8"))
+        except json.JSONDecodeError as e:
+            self._set_headers(400, 'text/plain')
+            self.wfile.write(f"{e}".encode())
+            return
+        except Exception as e:
+            self._set_headers(400, 'text/plain')
+            self.wfile.write(f"{e}".encode())
+            return
+
+    def do_POST(self):
+        routes = {
+            "/api/v1/guests": self.create_guest
+        }
+
+        if self.path in routes.keys():
+            routes[self.path]()
         else:
-            self.send_response(400)
-            self.send_header("Content-type", "text/html")
-            self.end_headers()
-            self.wfile.write(bytes("Invalid request path.", "utf-8"))
+            self._set_headers(status_code=404, content_type="text/plain")
+            self.wfile.write(bytes("Resource not found.", "utf-8"))
 
     def do_DELETE(self):
         if self.path.startswith("/api/v1/guests/"):

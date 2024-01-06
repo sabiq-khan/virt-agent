@@ -23,8 +23,17 @@ def create_guest(name="debian", cpu=2, memory=2048, disk_size=20, network="bridg
         f"--username {username}"
     ]
 
-    subprocess.run(command, check=True)
+    createvm_cmd = subprocess.run(command, shell=False, capture_output=True)
+    
+    print(createvm_cmd.stdout)
 
+    if (createvm_cmd.returncode != 0):
+        raise ChildProcessError(createvm_cmd.stderr)
+
+    tail_cmd = subprocess.run(["tail", "-n", "6"], input=createvm_cmd.stdout, shell=False, check=True, capture_output=True)
+    
+    return tail_cmd.stdout
+    
 def main():
     create_guest()
 
