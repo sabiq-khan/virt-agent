@@ -41,13 +41,16 @@ The API can be called by sending HTTP requests to the port that `server.py` is l
 ## Read Operations
 ## Server Info
 Sending a `GET` request to the root path returns information about the API server, as displayed by the `landing.html` page. This can be viewed in browser for clarity.
+
 ![](./resources/landing_page.png)
 
 ### API Documentation
 Information about the API can be found by sending a `GET` request to the `/api` path.
+
 ![](./resources/api_page.png)
 
 Information about the available endpoints for API v1 can be found by sending a `GET` request to the `/api/v1` path.
+
 ![](./resources/apiv1_page.png)
 
 ### Host Information
